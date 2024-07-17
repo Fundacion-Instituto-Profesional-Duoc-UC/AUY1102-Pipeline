@@ -113,7 +113,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "chokidar": "^2.0.3",
+    "chokidar": "^2.1.8",
     "cosmiconfig": "^6.0.0"
   }
 }

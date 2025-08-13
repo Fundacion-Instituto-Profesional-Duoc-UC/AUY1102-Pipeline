@@ -113,3 +113,5 @@ Another great way to contribute is to review pull request. Please, be extra kind
 - Review changes using the GitHub functionality. You can ask a clarifying question, point out an error or suggest an alternative. 
 > Note: You may ask for minor changes - "nitpicks", but consider whether they are real blockers to merging or not
 - Submit your review, which may include comments, an approval, or a changes request
+
+## 1.1.4

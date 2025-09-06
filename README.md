@@ -173,7 +173,8 @@ The scripts and documentation in this project are released under the [MIT Licens
 
 ## Contributions
 
-Contributions are welcome! See [Contributor's Guide](./docs/CONTRIBUTING.md)
+Contributions are welcome! read our [Contributor's Guide](./docs/CONTRIBUTING.md)
+
 
 ## Code of Conduct
 

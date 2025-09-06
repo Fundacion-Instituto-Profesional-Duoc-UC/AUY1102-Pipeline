@@ -1,3 +1,6 @@
+Se agrega una línea...
+Otra...
+
 # Github NPM Registry
 
 ## About this article

@@ -1,5 +1,23 @@
 # Github NPM Registry
 
+## Configuración del Entorno de Desarrollo
+
+Para poder trabajar en este proyecto es necesario contar con las siguientes herramientas instaladas en tu máquina local:
+
+### Requisitos
+- **Visual Studio Code**: Editor de código recomendado.  
+  👉 [Descargar VS Code](https://code.visualstudio.com/)  
+- **Git**: Sistema de control de versiones para clonar y gestionar ramas.  
+  👉 [Descargar Git](https://git-scm.com/downloads)  
+- **Cuenta en GitHub**: Permite colaborar y subir cambios al repositorio.  
+  👉 [Crear cuenta en GitHub](https://github.com/signup)  
+- **Acceso a Internet** estable.
+
+### Pasos de Instalación
+1. Verifica si tienes Git instalado:  
+   ```bash
+   git --version
+
 ## About this article
 
 GitHub with GitHubActions and GHAS offer an incredible experience for developers around the planet. Just with a few considerations and good ideas we can build a wonderful experience for our development teams, and they just literally "work only on their code"

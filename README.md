@@ -183,3 +183,11 @@ Contributions are welcome! read our [Contributor's Guide](./docs/CONTRIBUTING.md
 + **NPM Publish:** https://github.com/actions/setup-node
 + **NPM Audit Signatures:** https://github.blog/changelog/2022-07-26-a-new-npm-audit-signatures-command-to-verify-npm-package-integrity/
 + **NPM Audit:** https://github.com/marketplace/actions/npm-audit-action
+
+## Configuración del entorno de desarrollo
+
+1. Instala Git y un editor de texto recomendado (VS Code, Vim, etc.).
+2. Clona este repositorio:
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd AUY1102-Pipeline

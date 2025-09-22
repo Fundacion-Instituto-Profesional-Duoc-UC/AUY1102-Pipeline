@@ -183,3 +183,10 @@ Contributions are welcome! read our [Contributor's Guide](./docs/CONTRIBUTING.md
 + **NPM Publish:** https://github.com/actions/setup-node
 + **NPM Audit Signatures:** https://github.blog/changelog/2022-07-26-a-new-npm-audit-signatures-command-to-verify-npm-package-integrity/
 + **NPM Audit:** https://github.com/marketplace/actions/npm-audit-action
+
+
+## Development Setup
+To set up the development environment:
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Run the project using `npm start`

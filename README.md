@@ -6,7 +6,7 @@ GitHub with GitHubActions and GHAS offer an incredible experience for developers
 
 ## Using Github NPM Registry - Local Environment
 
-### Authenticating to the NPM Registry
+### Authenticating to the NPM registry
 
 1. Setting your [access token](https://docs.github.com/en/packages/learn-github-packages/about-permissions-for-github-packages#about-scopes-and-permissions-for-package-registries), to enable GitHub functions like an OAuth access token and authenticates the access to the GitHub API.
 

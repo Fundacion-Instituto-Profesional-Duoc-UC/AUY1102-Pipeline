@@ -69,6 +69,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.0.3",
+    "@cucumber/cucumber": "^12.2.0",
     "@faker-js/faker": "^7.4.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -87,7 +88,7 @@
     "eslint": "^8.23.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-node": "^4.1.0",
+    "eslint-config-node": "^1.6.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.29.1",
@@ -113,7 +114,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "chokidar": "^2.0.3",
+    "chokidar": "^4.0.3",
     "cosmiconfig": "^6.0.0"
   }
 }

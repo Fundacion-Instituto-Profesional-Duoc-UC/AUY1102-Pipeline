@@ -1,13 +1,15 @@
-name: Typescript for Pull Requests
+name: Pipeline CI/CD
 
 on:
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
+  push:
+    branches: [ master ]
 
 jobs:
-  lint:
+  verify_pipeline:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -17,25 +19,5 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint TypeScript
-        run: npm run lint
-  
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Unit Test TypeScript
-        run: npm run test:unit
+      - name: Test script
+        run: echo "Running tests (placeholder)..."

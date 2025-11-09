@@ -1,13 +1,10 @@
-export * from './value-object';
+// src/index.ts
+// Este archivo solo debe exportar los módulos de tu librería
 
-const apiKey = "12345-abcde-67890-fghij";
-const githubToken = "ghp_1234567890abcdefghijklmnopqrstuvwx";
+export * from './value-object/primitives/date-value-object';
+export * from './value-object/primitives/enum-value-object';
+export * from './value-object/primitives/number-value-object';
+export * from './value-object/primitives/string-value-object';
 
-function fetchData() {
-    fetch(`https://api.example.com/data?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
-}
-
-fetchData();
+// Y cualquier otra cosa que deba ser pública, como 'sum'
+export * from './lib/sum';

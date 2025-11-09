@@ -11,7 +11,12 @@ describe('StringValueObject', () => {
 
   describe('different to', () => {
     it(`should return "true" if the values are different`, () => {
-      firstName = new FirstName(WordMother.random())
+      // Creamos un valor que garantizamos sea diferente al de 'name'
+      const differentName = name + '-different';
+      
+      firstName = new FirstName(differentName);
+      
+      // Comparamos el valor diferente contra el valor original
       const expected = firstName.differentTo(name);
 
       expect(expected).toBe(true);

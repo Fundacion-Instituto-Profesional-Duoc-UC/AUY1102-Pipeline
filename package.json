@@ -1,8 +1,8 @@
 {
-  "name": "@Fundacion-Instituto-Profesional-Duoc-UC/auy1102-pipeline",
+  "name": "auy1102-001v-2025-g5",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Fundacion-Instituto-Profesional-Duoc-UC/AUY1102-Pipeline.git"
+    "url": "https://github.com/bapp86/AUY1102-001V-2025-G5.git"
   },
   "version": "1.0.0",
   "description": "AUY1102",
@@ -42,11 +42,13 @@
     "prepare": "is-ci || husky install",
     "prepublishOnly": "npm run build:ci",
     "sort": "sort-package-json package.json",
+    "test": "npm run test:coverage",
     "test:unit": "jest --passWithNoTests",
     "test:coverage": "jest --coverage",
     "test:dev": "jest --verbose --colors --expand --maxWorkers=50% --detectOpenHandles --errorOnDeprecated --bail",
     "test:watch": "jest --watch --verbose --colors --expand --maxWorkers=25%",
-    "types": "dts-bundle-generator --config dts-generator.json"
+    "types": "dts-bundle-generator --config dts-generator.json",
+    "bdd": "cucumber-js -r ts-node/register test/features --require-module ts-node/register"
   },
   "husky": {
     "hooks": {
@@ -59,7 +61,27 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "author": "DUOCUC - AUY1102",
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.{ts,js}"
+    ],
+    "exclude": [
+      "**/*.test.*",
+      "test/**",
+      "**/__tests__/**"
+    ],
+    "extension": [
+      ".ts",
+      ".js"
+    ],
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "cache": false
+  },
+  "author": "bapp86 - AUY1102-001V-2025-G5",
   "module": "dist/github-npm-registry-be.esm.js",
   "devDependencies": {
     "@babel/cli": "^7.18.10",
@@ -69,6 +91,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.0.3",
+    "@cucumber/cucumber": "^12.2.0",
     "@faker-js/faker": "^7.4.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -78,13 +101,13 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@swc/core": "^1.3.1",
     "@swc/jest": "^0.2.22",
-    "@types/jest": "^29.0.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^20.14.2",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "dts-bundle-generator": "^6.13.0",
-    "eslint": "^8.23.1",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-node": "^4.1.0",
@@ -95,19 +118,25 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-unicorn": "^43.0.2",
+    "globals": "^16.5.0",
     "http-status-codes": "^2.2.0",
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
     "jest": "^29.7.0",
     "lint-staged": "^15.2.7",
     "lockfile-lint": "^4.8.0",
+    "nyc": "^17.1.0",
     "prettier": "^2.7.1",
     "semantic-release": "^24.0.0",
     "sort-package-json": "^2.10.0",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tslib": "^2.6.3",
-    "typescript": "^4.8.3"
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^8.46.3"
   },
   "engines": {
     "node": ">=14"

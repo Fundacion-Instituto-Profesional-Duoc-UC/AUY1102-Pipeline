@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1762661315367" clover="3.2.0">
+  <project timestamp="1762661315367" name="All files">
+    <metrics statements="76" coveredstatements="31" conditionals="10" coveredconditionals="6" methods="33" coveredmethods="18" elements="119" coveredelements="55" complexity="0" loc="76" ncloc="76" packages="5" files="11" classes="11"/>
+    <package name="src">
+      <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <file name="index.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/index.ts">
+        <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.lib">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="sum.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/lib/sum.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.quality">
+      <metrics statements="27" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <file name="errores-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/quality/errores-object.ts">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="insecure-1-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/quality/insecure-1-object.ts">
+        <metrics statements="13" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+      </file>
+      <file name="insecure-2-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/quality/insecure-2-object.ts">
+        <metrics statements="11" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.value-object">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/index.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.value-object.primitives">
+      <metrics statements="38" coveredstatements="23" conditionals="10" coveredconditionals="6" methods="23" coveredmethods="16"/>
+      <file name="date-value-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/primitives/date-value-object.ts">
+        <metrics statements="15" coveredstatements="1" conditionals="3" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+      <file name="enum-value-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/primitives/enum-value-object.ts">
+        <metrics statements="6" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/primitives/index.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+      </file>
+      <file name="number-value-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/primitives/number-value-object.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="5" count="20" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+      </file>
+      <file name="string-value-object.ts" path="/home/bpainemilla/projects/auy1102/AUY1102-Pipeline/src/value-object/primitives/string-value-object.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="8" coveredmethods="8"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

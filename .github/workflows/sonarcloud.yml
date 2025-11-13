@@ -1,0 +1,41 @@
+name: SonarCloud
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci || npm install
+
+      # Prechequeos: confirmar que se genera coverage en CI
+      - run: npm test -- --coverage || true
+      - run: |
+          echo "node $(node -v)"
+          echo "npm  $(npm -v)"
+          echo "Listado raíz:"
+          ls -la
+          echo "Listado de coverage:"
+          ls -la coverage || true
+          echo "¿Existe lcov.info?"
+          ls -la coverage/lcov.info || true
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.verbose=true

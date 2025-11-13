@@ -1,4 +1,4 @@
-# Github NPM Registry
+# Github NPM Registry Poblete Falcón
 
 ## About this article
 
@@ -183,3 +183,11 @@ Contributions are welcome! read our [Contributor's Guide](./docs/CONTRIBUTING.md
 + **NPM Publish:** https://github.com/actions/setup-node
 + **NPM Audit Signatures:** https://github.blog/changelog/2022-07-26-a-new-npm-audit-signatures-command-to-verify-npm-package-integrity/
 + **NPM Audit:** https://github.com/marketplace/actions/npm-audit-action
+Análisis automático SonarCloud habilitado
+
+Actualización de prueba para activar CI/CD.
+Reejecución del pipeline después de agregar secrets.
+Quinta ejecución del pipeline para probar login correcto.
+Sexta ejecución: probar scopes del token Docker Hub.
+# prueba snyk
+# prueba snyk 3

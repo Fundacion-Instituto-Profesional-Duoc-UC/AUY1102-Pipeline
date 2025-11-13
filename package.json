@@ -46,7 +46,8 @@
     "test:coverage": "jest --coverage",
     "test:dev": "jest --verbose --colors --expand --maxWorkers=50% --detectOpenHandles --errorOnDeprecated --bail",
     "test:watch": "jest --watch --verbose --colors --expand --maxWorkers=25%",
-    "types": "dts-bundle-generator --config dts-generator.json"
+    "types": "dts-bundle-generator --config dts-generator.json",
+    "test": "jest --coverage"
   },
   "husky": {
     "hooks": {

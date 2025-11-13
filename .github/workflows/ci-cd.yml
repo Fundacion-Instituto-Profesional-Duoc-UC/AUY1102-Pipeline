@@ -1,0 +1,36 @@
+name: CI/CD Docker
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Construir imagen Docker
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:${{ github.sha }} .
+
+      - name: Ejecutar pruebas unitarias dentro del contenedor
+        run: |
+          docker run --rm ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:${{ github.sha }} npm test
+
+      - name: Publicar imagen en Docker Hub
+        if: success()
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:${{ github.sha }}
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline:latest

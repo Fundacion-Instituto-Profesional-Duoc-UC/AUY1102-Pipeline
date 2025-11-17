@@ -1,4 +1,4 @@
-# Github NPM Registry
+
 
 ## About this article
 

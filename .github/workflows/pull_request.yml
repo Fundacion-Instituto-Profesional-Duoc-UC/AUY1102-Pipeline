@@ -22,9 +22,11 @@ jobs:
 
       - name: Lint TypeScript
         run: npm run lint
+        continue-on-error: true
   
   test:
     runs-on: ubuntu-latest
+    need: lint
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

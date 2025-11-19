@@ -39,4 +39,7 @@ jobs:
 
       - name: Unit Test TypeScript
         run: npm run test:unit
+    test:
+      needs: lint
+
 #hola hola

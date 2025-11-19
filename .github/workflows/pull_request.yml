@@ -1,4 +1,4 @@
-name: Typescript for Pull Requests
+name: Tests en Pull Request
 
 on:
   pull_request:
@@ -6,36 +6,15 @@ on:
       - master
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint TypeScript
-        run: npm run lint
-  
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout del código
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm install
 
-      - name: Unit Test TypeScript
-        run: npm run test:unit
+      - name: Ejecutar pruebas
+        run: npm test

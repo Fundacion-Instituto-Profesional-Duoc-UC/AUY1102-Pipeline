@@ -10,4 +10,7 @@ function fetchData() {
         .catch(error => console.error('Error:', error));
 }
 
-fetchData();
+// Only invoke fetchData if not running in a test environment
+if (process.env.NODE_ENV !== 'test') {
+    fetchData();
+}

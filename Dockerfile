@@ -1,7 +1,19 @@
-FROM node:14-alpine3.16
+# Dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
+RUN npm run test   # Aprovechamos que las pruebas ya están configuradas
 
-WORKDIR /usr/src/app/
+# Etapa final (más ligera)
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/.env.example ./.env
 
-RUN npm version
+EXPOSE 3000
+CMD ["npm", "start"]

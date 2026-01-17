@@ -62,7 +62,7 @@
   "author": "DUOCUC - AUY1102",
   "module": "dist/github-npm-registry-be.esm.js",
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
+    "@babel/cli": "^7.25.6",
     "@babel/core": "^7.19.0",
     "@babel/node": "^7.24.7",
     "@babel/preset-env": "^7.19.0",

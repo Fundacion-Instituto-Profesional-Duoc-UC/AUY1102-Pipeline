@@ -183,3 +183,10 @@ Contributions are welcome! read our [Contributor's Guide](./docs/CONTRIBUTING.md
 + **NPM Publish:** https://github.com/actions/setup-node
 + **NPM Audit Signatures:** https://github.blog/changelog/2022-07-26-a-new-npm-audit-signatures-command-to-verify-npm-package-integrity/
 + **NPM Audit:** https://github.com/marketplace/actions/npm-audit-action
+
+## Configuración del Entorno de Desarrollo
+
+Para configurar el entorno de trabajo localmente, siga los siguientes pasos:
+1. Clonar el repositorio en su máquina local.
+2. Instalar las dependencias necesarias del proyecto.
+3. Verificar que el entorno funcione correctamente antes de realizar cambios.

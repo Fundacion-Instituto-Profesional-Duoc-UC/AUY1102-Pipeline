@@ -33,6 +33,7 @@
     "ext": "ts, js"
   },
   "scripts": {
+    "pruebas:eval": "jets --coverage",
     "build": "rimraf dist && tsc",
     "build:ci": "npm run build && npm run types",
     "format": "prettier 'src/**/*.[jt]s?(x)' --write",

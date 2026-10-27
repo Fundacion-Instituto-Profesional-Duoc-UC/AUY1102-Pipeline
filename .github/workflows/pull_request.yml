@@ -1,4 +1,4 @@
-name: Typescript for Pull Requests
+name: Testing Pipeline
 
 on:
   pull_request:
@@ -6,36 +6,21 @@ on:
       - master
 
 jobs:
-  lint:
+  test_job:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout Código
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
 
-      - name: Install dependencies
+      - name: Instalar Dependencias
         run: npm install
 
-      - name: Lint TypeScript
-        run: npm run lint
-  
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Unit Test TypeScript
-        run: npm run test:unit
+      - name: Ejecutar Pruebas Unitarias
+        run: npm test

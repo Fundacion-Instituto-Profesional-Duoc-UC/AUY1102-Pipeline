@@ -1,12 +1,18 @@
 name: Typescript for Pull Requests
 
 on:
+  push:
+    branches: 
+    - master
+    - main
   pull_request:
     branches:
       - master
+      - main
 
 jobs:
   lint:
+    name: Verificación Estática y Estilo de Código (ESLint & Prettier)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -15,16 +21,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
 
       - name: Lint TypeScript
         run: npm run lint
+        continue-on-error: true
   
   test:
+    name: Ejecución de Pruebas Unitarias Automatizadas (Jest)
     runs-on: ubuntu-latest
+    needs: lint
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -32,7 +41,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install

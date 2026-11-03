@@ -3,7 +3,7 @@ const value = 10;
 const resultadoFinal = value * 2;
 
 // Adaptabilidad
-const message: string = 10;
+const message: number = 10;
 
 // Responsabilidad
 

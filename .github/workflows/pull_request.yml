@@ -1,4 +1,4 @@
-name: Typescript for Pull Requests
+name: Testing
 
 on:
   pull_request:

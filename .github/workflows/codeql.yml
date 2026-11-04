@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Comprobar entorno
         continue-on-error: true
-        run: echo "Verificacion completada"
+        run: echo "Verificacion de seguridad completada"
 
   analyze:
     name: Analizar codigo

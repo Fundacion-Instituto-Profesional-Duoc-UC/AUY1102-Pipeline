@@ -1,5 +1,5 @@
 name: Re-usable Workflow
-
+# Trigger de validacion de flujo reutilizable
 on:
   workflow_call:
   pull_request:

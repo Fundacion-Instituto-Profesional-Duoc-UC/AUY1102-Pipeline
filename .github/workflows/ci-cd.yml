@@ -1,0 +1,54 @@
+name: CI/CD Docker Pipeline
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+jobs:
+  docker-build-and-test:
+    name: Build Docker & Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t auy1102-app:ci .
+      - name: Run unit tests inside container
+        run: docker run --rm auy1102-app:ci npm run test:unit
+      # Se exporta la imagen probada para reutilizar exactamente la misma en el deploy
+      - name: Save tested Docker image
+        run: docker save auy1102-app:ci -o auy1102-app.tar
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: auy1102-app.tar
+          retention-days: 1
+  docker-publish:
+    name: Publish Image to Docker Hub
+    needs: [docker-build-and-test]
+    if: ${{ success() && ((github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event_name == 'pull_request') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download tested Docker image
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+      - name: Load Docker image
+        run: docker load -i auy1102-app.tar
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Tag and push image to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker tag auy1102-app:ci "$DOCKER_USER/auy1102-pipeline-ev3:$IMAGE_TAG"
+          docker tag auy1102-app:ci "$DOCKER_USER/auy1102-pipeline-ev3:latest"
+          docker push "$DOCKER_USER/auy1102-pipeline-ev3:$IMAGE_TAG"
+          docker push "$DOCKER_USER/auy1102-pipeline-ev3:latest"

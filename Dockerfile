@@ -1,7 +1,18 @@
-FROM node:14-alpine3.16
+FROM node:20-alpine
+
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+ENV CI=true
+RUN npm ci
 
 COPY . .
 
-WORKDIR /usr/src/app/
+RUN npm run build && chown -R node:node /usr/src/app
 
-RUN npm version
+USER node
+
+CMD ["npm", "run", "test:unit"]

@@ -1,0 +1,88 @@
+name: CI/CD Pipeline - EduTech Labs
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test-and-security:
+    name: Build, Test & Quality Gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout del código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para SonarCloud
+
+      - name: 2. Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 3. Instalar dependencias y Compilar
+        run: |
+          npm ci
+          npm run build --if-present
+
+      - name: 4. Ejecutar Pruebas Unitarias y Cobertura
+        run: npm test -- --coverage
+
+      - name: 5. Análisis de Calidad con SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.qualitygate.wait=true
+
+      - name: 6. Escaneo de Vulnerabilidades de Dependencias (Snyk)
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=critical
+
+  docker-build-scan-push:
+    name: Docker Build, Scout & Push
+    runs-on: ubuntu-latest
+    # Solo se ejecuta si el job anterior (pruebas, Sonar, Snyk) fue 100% exitoso
+    needs: build-test-and-security
+
+    steps:
+      - name: 1. Checkout del código
+        uses: actions/checkout@v4
+
+      - name: 2. Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 3. Construir imagen Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/edutech-app:latest
+
+      - name: 4. Análisis de Seguridad de Imagen con Docker Scout
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/edutech-app:latest
+          sarif-file: scout-results.sarif
+          only-severities: critical
+          exit-code: true # Bloquea el pipeline si hay vulnerabilidades críticas
+
+      - name: 5. Publicar imagen en Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/edutech-app:latest

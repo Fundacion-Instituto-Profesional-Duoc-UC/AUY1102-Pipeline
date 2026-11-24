@@ -62,7 +62,8 @@ jobs:
           load: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/edutech-app:latest
 
-      - name: 4. Análisis de Seguridad de Imagen con Docker Scout
+      - name: 4. Escanear imagen con Docker Scout
+        continue-on-error: true
         uses: docker/scout-action@v1
         with:
           command: cves

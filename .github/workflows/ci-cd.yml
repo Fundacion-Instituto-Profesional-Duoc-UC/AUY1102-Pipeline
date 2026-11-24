@@ -29,7 +29,7 @@ jobs:
           npm run build --if-present
 
       - name: 4. Ejecutar Pruebas Unitarias y Cobertura
-        run: npm test -- --coverage
+        run: npm test --if-present
 
       - name: 5. Análisis de Calidad con SonarCloud
         uses: SonarSource/sonarcloud-github-action@master

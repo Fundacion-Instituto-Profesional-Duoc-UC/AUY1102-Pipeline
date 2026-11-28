@@ -110,14 +110,12 @@
     "semantic-release": "^24.0.0",
     "sort-package-json": "^2.10.0",
     "ts-node-dev": "^2.0.0",
-    "tslib": "^2.6.3",
     "typescript": "^4.8.3"
   },
   "engines": {
     "node": ">=14"
   },
   "dependencies": {
-    "chokidar": "^2.0.3",
-    "cosmiconfig": "^6.0.0"
+    "tslib": "^2.6.3"
   }
 }

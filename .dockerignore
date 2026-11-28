@@ -1,0 +1,13 @@
+node_modules
+dist
+coverage
+.git
+.github
+.husky
+evidencias
+img
+docs
+*.md
+.npmrc
+credentials.yml
+.env

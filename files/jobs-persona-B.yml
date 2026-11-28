@@ -1,0 +1,108 @@
+  # ------------------------------------------------------------------
+  # 3) SonarCloud: análisis estático + Quality Gate (solo en PR)
+  # ------------------------------------------------------------------
+  sonarcloud:
+    name: SonarCloud
+    if: github.event_name == 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Sonar necesita el historial completo
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Análisis SonarCloud (espera el Quality Gate y falla si no pasa)
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.timeout=300
+
+  # ------------------------------------------------------------------
+  # 4) Snyk: código (SAST) y dependencias
+  # ------------------------------------------------------------------
+  snyk:
+    name: Snyk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+
+      - uses: snyk/actions/setup@master
+
+      - name: Snyk Code (análisis estático) - falla con severidad alta o superior
+        run: snyk code test --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk Open Source (dependencias de producción) - falla con críticas
+        run: snyk test --prod --severity-threshold=critical
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # ------------------------------------------------------------------
+  # 5) GitHub Advanced Security: CodeQL + revisión de dependencias
+  #    (el escaneo de secretos se activa en Settings > Code security)
+  # ------------------------------------------------------------------
+  codeql:
+    name: GHAS - CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          queries: security-extended
+
+      - uses: github/codeql-action/analyze@v3
+        id: analyze
+        with:
+          category: /language:javascript-typescript
+          output: sarif-results
+
+      - name: Bloquear si hay alertas de severidad alta o crítica (CVSS >= 7.0)
+        run: |
+          FILE=sarif-results/javascript-typescript.sarif
+          COUNT=$(jq '
+            [ .runs[] as $run
+              | ([($run.tool.driver.rules // [])[], (($run.tool.extensions // [])[].rules // [])[]]) as $rules
+              | ($run.results // [])[]
+              | . as $r
+              | ($rules | map(select(.id == $r.ruleId)) | first | .properties["security-severity"] // empty | tonumber)
+              | select(. >= 7.0)
+            ] | length' "$FILE")
+          echo "Alertas CodeQL altas/críticas: $COUNT"
+          if [ "$COUNT" -gt 0 ]; then
+            echo "::error::CodeQL encontró $COUNT alerta(s) de severidad alta o crítica"
+            exit 1
+          fi
+
+  dependency-review:
+    name: GHAS - Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+

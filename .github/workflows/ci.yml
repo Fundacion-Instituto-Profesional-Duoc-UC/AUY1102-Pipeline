@@ -1,0 +1,146 @@
+name: CI/CD
+
+# Se dispara en cada push a develop y en cada pull request a main (master si no lo renombraste)
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  IMAGE_LOCAL: auy1102-pipeline
+
+jobs:
+  # ------------------------------------------------------------------
+  # 1) Construye la imagen y corre las pruebas unitarias DENTRO del contenedor
+  # ------------------------------------------------------------------
+  test:
+    name: Build + pruebas unitarias en contenedor
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Construir imagen (target test)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: test
+          load: true
+          tags: ${{ env.IMAGE_LOCAL }}:test
+          cache-from: type=gha,scope=test
+          cache-to: type=gha,scope=test,mode=max
+
+      - name: Ejecutar pruebas dentro del contenedor
+        run: |
+          mkdir -p coverage
+          docker run --rm -v "$PWD/coverage:/app/coverage" ${{ env.IMAGE_LOCAL }}:test \
+            npm run test:coverage -- --coverageReporters=lcov --coverageReporters=text
+
+      - name: Guardar cobertura (la usa SonarCloud)
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+          if-no-files-found: error
+
+  # ------------------------------------------------------------------
+  # 2) Verificación de tipos sobre TODO src/ (incluye src/quality)
+  # ------------------------------------------------------------------
+  typecheck:
+    name: TypeScript (tsc)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx tsc --noEmit
+
+  # ------------------------------------------------------------------
+  # 6) Docker Scout: CVEs de la imagen final
+  # ------------------------------------------------------------------
+  docker-scout:
+    name: Docker Scout
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Construir imagen runtime (sin publicar)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime
+          load: true
+          tags: ${{ env.IMAGE_LOCAL }}:scan
+          cache-from: type=gha,scope=runtime
+          cache-to: type=gha,scope=runtime,mode=max
+
+      - name: Docker Scout - falla con CVEs críticas o altas
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: local://${{ env.IMAGE_LOCAL }}:scan
+          only-severities: critical,high
+          exit-code: true
+
+  # ------------------------------------------------------------------
+  # 7) Publicación en Docker Hub: solo push a develop y SOLO si todo lo anterior pasó
+  # ------------------------------------------------------------------
+  publish:
+    name: Publicar en Docker Hub
+    # Persona B agrega aquí: sonarcloud, snyk, codeql, dependency-review
+    needs: [test, typecheck, docker-scout]
+    # sonarcloud y dependency-review solo corren en PR: en push quedan "skipped" y eso es válido.
+    # Cualquier "failure" o "cancelled" aguas arriba cancela el despliegue.
+    if: >-
+      ${{ always()
+      && github.event_name == 'push'
+      && !contains(needs.*.result, 'failure')
+      && !contains(needs.*.result, 'cancelled') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/auy1102-pipeline
+          tags: |
+            type=raw,value=develop
+            type=sha,format=short
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=runtime
